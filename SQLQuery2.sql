@@ -1,10 +1,5 @@
 
 
-
-
-
-
-
 INSERT INTO account VALUES
 (2000),
 (1500),
@@ -163,6 +158,8 @@ IF (SELECT account.balance FROM account
 	UPDATE account
 		SET balance = balance - @amount
 		WHERE id = @Aid
+	INSERT INTO acclog VALUES
+		(@Aid,@amount,SYSDATETIME())
 	END
 	ELSE
 	BEGIN 
