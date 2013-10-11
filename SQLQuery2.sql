@@ -1,5 +1,7 @@
 
 
+
+
 INSERT INTO account VALUES
 (2000),
 (1500),
@@ -173,3 +175,8 @@ END CATCH
 GO
 GO
 
+
+CREATE PROCEDURE returnBalance @Aid int, @return int OUTPUT
+AS
+SET @return = (SELECT account.balance FROM account
+					WHERE account.id = @Aid)
