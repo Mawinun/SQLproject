@@ -1,4 +1,10 @@
 
+
+
+
+
+
+
 INSERT INTO account VALUES
 (2000),
 (1500),
@@ -60,6 +66,8 @@ INSERT INTO aha VALUES
 (10,10),
 (10,20);
 
+
+GO
 CREATE PROCEDURE calculateInterests
 AS
 BEGIN TRANSACTION [transInterest]
@@ -149,7 +157,7 @@ AS
 BEGIN TRANSACTION [transTakeOut]
 BEGIN TRY
 IF (SELECT account.balance FROM account
-	WHERE account.id = @Aid) > @amount
+	WHERE account.id = @Aid) >= @amount
 	BEGIN
 	SET @result = @amount
 	UPDATE account
