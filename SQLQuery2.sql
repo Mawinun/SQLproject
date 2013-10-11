@@ -1,7 +1,4 @@
 
-
-
-
 INSERT INTO account VALUES
 (2000),
 (1500),
@@ -145,3 +142,29 @@ ROLLBACK TRANSACTION [transConfirmLogin]
 END CATCH
 GO
 GO
+
+
+CREATE PROCEDURE takeOutMoney @Aid int, @amount int, @result int OUTPUT
+AS
+BEGIN TRANSACTION [transTakeOut]
+BEGIN TRY
+IF (SELECT account.balance FROM account
+	WHERE account.id = @Aid) > @amount
+	BEGIN
+	SET @result = @amount
+	UPDATE account
+		SET balance = balance - @amount
+		WHERE id = @Aid
+	END
+	ELSE
+	BEGIN 
+	SET @result = 0
+	END
+COMMIT TRANSACTION [transTakeOut]
+END TRY
+BEGIN CATCH
+ROLLBACK TRANSACTION [transTakeOut]
+END CATCH
+GO
+GO
+
